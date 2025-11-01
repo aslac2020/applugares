@@ -1,0 +1,115 @@
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  z-index: 1000;
+
+  nav {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+
+    button {
+      background: white;
+      border-radius: 50%;
+      padding: 10px;
+      min-width: 48px;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.25s ease-in-out;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+
+      mat-icon {
+        font-size: 24px;
+        color: #666;
+        transition: transform 0.2s ease, color 0.2s ease;
+      }
+
+      &:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+        mat-icon {
+          color: #0093E9;
+          transform: rotate(8deg);
+        }
+      }
+
+      &:active {
+        animation: bounce 0.4s ease;
+      }
+
+      &.active {
+        background: linear-gradient(135deg, #00C6FF 0%, #0072FF 100%);
+        box-shadow: 0 4px 14px rgba(0, 114, 255, 0.4);
+        transform: scale(1.1);
+
+        mat-icon {
+          color: white;
+          transform: scale(1.1);
+        }
+
+        /* ✨ Reflexo passando no botão ativo */
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -75%;
+          width: 50%;
+          height: 100%;
+          background: linear-gradient(
+              120deg,
+              rgba(255, 255, 255, 0.3) 0%,
+              rgba(255, 255, 255, 0.6) 50%,
+              rgba(255, 255, 255, 0.3) 100%
+          );
+          transform: skewX(-20deg);
+          animation: shine 1.8s infinite;
+        }
+      }
+    }
+  }
+}
+
+/* 💫 Bounce suave */
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.15);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  70% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ✨ Efeito shine (reflexo) */
+@keyframes shine {
+  0% {
+    left: -75%;
+  }
+  50% {
+    left: 125%;
+  }
+  100% {
+    left: 125%;
+  }
+}

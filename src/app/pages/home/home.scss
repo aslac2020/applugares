@@ -1,0 +1,86 @@
+.container-lugares {
+  min-height: 100vh;
+  background: #f9f9ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title-navbar {
+  background: linear-gradient(90deg, #5e60ce, #64dfdf, #80ffdb);
+  color: white;
+  font-weight: 700;
+  font-size: 1.4rem;
+  justify-content: center;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.conteudo {
+  text-align: center;
+  margin-top: 1rem;
+  width: 100%;
+  max-width: 450px;
+}
+
+.subtitulo {
+  font-weight: 600;
+  color: #4a4a4a;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.cards-categorias {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  justify-items: center;
+}
+
+.categoria-card {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: white;
+
+  img {
+    width: 60px;
+    margin-bottom: 0.5rem;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  }
+
+  mat-card-title {
+    font-size: 0.95rem;
+    color: #333;
+    font-weight: 500;
+  }
+}
+
+.descricao {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* 💻 Telas maiores */
+@media (min-width: 768px) {
+  .cards-categorias {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .categoria-card {
+    width: 160px;
+    height: 160px;
+  }
+}

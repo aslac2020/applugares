@@ -1,0 +1,20 @@
+<div class="container-lugares">
+  <mat-toolbar class="title-navbar">
+    <span>Seu mapa de descobertas 🌍</span>
+  </mat-toolbar>
+
+  <div class="conteudo">
+    <span class="subtitulo">Escolha uma categoria</span>
+    <div class="cards-categorias">
+      <mat-card (click)="aoClicarCard(categoria.codigo)"  class="categoria-card" *ngFor="let categoria of listaCategorias">
+        <img [src]="categoria.icone" alt="{{categoria.nome}}">
+        <mat-card-title>{{categoria.nome}}</mat-card-title>
+      </mat-card>
+    </div>
+    <p class="descricao">Descubra os melhores lugares perto de você!</p>
+  </div>
+</div>
+<app-rodape></app-rodape>
+
+
+<app-rodape></app-rodape>

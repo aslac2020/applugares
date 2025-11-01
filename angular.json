@@ -88,11 +88,18 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/leaflet/dist/leaflet.css"
+            ],
+            "scripts": [
+              "node_modules/leaflet/dist/leaflet.js"
             ]
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "76b6ebe7-be1a-4211-9002-23193cbf4a6e"
   }
 }
