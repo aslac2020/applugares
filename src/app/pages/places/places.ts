@@ -10,8 +10,6 @@ import {TipoDeCategorias} from '../../enums/tiposDeCategoria.enum';
 import {Subscription} from 'rxjs';
 import {Apiservices} from '../../services/apiservices';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {latLng, Marker, tileLayer} from 'leaflet';
-import * as L from 'leaflet';
 import {MatIconModule} from '@angular/material/icon';
 import * as maplibregl from 'maplibre-gl';
 
