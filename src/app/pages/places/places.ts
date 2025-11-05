@@ -34,11 +34,13 @@ import * as maplibregl from 'maplibre-gl';
   providers: [Apiservices]
 })
 export class Places implements OnInit, AfterViewInit {
+  private readonly GEOAPIFY_API_KEY = '31f3bc0744ce492195b612e694b61d8c';
   private map!: maplibregl.Map;
   private userMarker?: maplibregl.Marker;
   private markers: maplibregl.Marker[] = [];
   private coordenadas = { lat: 0, lon: 0 };
   private subscriptions = new Subscription();
+  userCoords!: [number, number];
 
   tituloCategoria!: string;
   codigoCategoria!: string;
@@ -61,77 +63,61 @@ export class Places implements OnInit, AfterViewInit {
   }
 
   private initMap() {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        this.coordenadas = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+    navigator.geolocation.getCurrentPosition((pos) => {
+      this.userCoords = [pos.coords.longitude, pos.coords.latitude];
 
-        this.map = new maplibregl.Map({
-          container: 'map',
-          style: `https://maps.geoapify.com/v1/styles/osm-bright/style.json?apiKey=31f3bc0744ce492195b612e694b61d8c`,
-          center: [this.coordenadas.lon, this.coordenadas.lat],
-          zoom: 14
-        });
+      this.map = new maplibregl.Map({
+        container: 'map',
+        style: `https://maps.geoapify.com/v1/styles/osm-bright/style.json?apiKey=${this.GEOAPIFY_API_KEY}`,
+        center: this.userCoords,
+        zoom: 15
+      });
 
-        new maplibregl.Marker({ color: '#2A9D8F' })
-          .setLngLat([this.coordenadas.lon, this.coordenadas.lat])
-          .setPopup(new maplibregl.Popup().setText('Você está aqui 😄'))
-          .addTo(this.map);
-      },
-      (err) => {
-        console.error('Erro ao pegar localização:', err);
-      },
-      { enableHighAccuracy: true }
-    );
+      this.map.addControl(new maplibregl.NavigationControl());
+
+      // Atualiza posição do marcador pulsante
+      const pulse = document.getElementById('user-location');
+      this.atualizarPosicaoMarker(pulse!, this.userCoords);
+      this.map.on('move', () => {
+        this.atualizarPosicaoMarker(pulse!, this.userCoords);
+      });
+    });
   }
 
-   pegarLocalizacaoUsuario() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          this.coordenadas = { lat: latitude, lon: longitude };
-
-          this.map.setCenter([longitude, latitude]);
-          this.map.setZoom(15);
-
-          this.userMarker = new maplibregl.Marker({ color: '#0078ff' })
-            .setLngLat([longitude, latitude])
-            .setPopup(new maplibregl.Popup().setHTML('<b>Você está aqui 😄</b>'))
-            .addTo(this.map);
-        },
-        (error) => {
-          console.error('Erro ao obter localização:', error);
-          this.map.setCenter([-46.6333, -23.5505]); // São Paulo
-        },
-        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
-      );
-    }
+  private atualizarPosicaoMarker(element: HTMLElement, coords: [number, number]) {
+    if (!this.map) return;
+    const pixel = this.map.project(coords);
+    element.style.left = `${pixel.x}px`;
+    element.style.top = `${pixel.y}px`;
   }
+
 
   buscarLugares() {
-    const { lat, lon } = this.coordenadas;
-    if (!lat || !this.codigoCategoria) return;
+    if (!this.userCoords || !this.codigoCategoria) return;
+    const [lon, lat] = this.userCoords;
 
     this.apiService.localizarLugaresProximos({
       lat: lat,
       lon: lon,
       categoria: this.codigoCategoria
     }).subscribe((res: any) => {
+      console.log(res);
       res.features.forEach((place: any) => {
-        const [lng, lat] = place.geometry.coordinates;
+        const [lon, lat] = place.geometry.coordinates;
         const name = place.properties.name || 'Lugar próximo';
+        const endereco = place.properties.address_line2 || '';
 
-        const popupHTML = `
-          <div style="text-align:center">
-            <strong>${name}</strong><br>
-            <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}" target="_blank">Google Maps</a> |
-            <a href="https://waze.com/ul?ll=${lat},${lng}&navigate=yes" target="_blank">Waze</a>
-          </div>
-        `;
-
-        new maplibregl.Marker({ color: '#FF6F61' })
-          .setLngLat([lng, lat])
-          .setPopup(new maplibregl.Popup().setHTML(popupHTML))
+        new maplibregl.Marker({ color: '#64dfdf' })
+          .setLngLat([lon, lat])
+          .setPopup(
+            new maplibregl.Popup().setHTML(`
+              <b>${name}</b><br>${endereco}<br><br>
+              <button style="background:#5e60ce;color:white;border:none;border-radius:8px;padding:6px 10px;cursor:pointer"
+                onclick="window.open('https://www.waze.com/ul?ll=${lat},${lon}&navigate=yes', '_blank')">
+                Abrir no Waze
+              </button>
+            `)
+          )
           .addTo(this.map);
       });
     });
