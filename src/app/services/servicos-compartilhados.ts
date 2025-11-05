@@ -7,11 +7,11 @@ import {BehaviorSubject, Observable} from 'rxjs';
 export class ServicosCompartilhados {
   private categoria$ = new BehaviorSubject<string>('');
 
-  setCategoria(codigo: string) {
+  setCategoria(codigo: any) {
     this.categoria$.next(codigo);
   }
 
-  getCategoria(): Observable<string> {
+  getCategoria(): Observable<any> {
     return this.categoria$.asObservable();
   }
 

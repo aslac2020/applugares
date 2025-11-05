@@ -7,6 +7,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 
 import {App} from './app';
+import {Apiservices} from './services/apiservices';
 
 
 @NgModule({
@@ -20,6 +21,6 @@ import {App} from './app';
     Rodape,
   ],
   providers: [],
-  bootstrap: []
+  bootstrap: [],
 })
 export class AppmoduleModule { }

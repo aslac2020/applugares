@@ -1,7 +1,53 @@
-.container-lugares {
-  min-height: 100vh;
-  background: #f9f9ff;
+.places-container {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  background: #f9f9ff;
+}
+
+.toolbar {
+  background: linear-gradient(90deg, #5e60ce, #64dfdf, #80ffdb);
+  color: white;
+  font-weight: 700;
+  text-align: center;
+  justify-content: center;
+}
+
+.map-wrapper {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.btn-localizar {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #5e60ce;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
   align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 768px) {
+  .btn-localizar {
+    bottom: 90px;
+    width: 80%;
+    justify-content: center;
+  }
 }

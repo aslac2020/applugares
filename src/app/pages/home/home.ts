@@ -6,7 +6,7 @@ import {Rodape} from '../../shared/rodape/rodape';
 import {Router} from '@angular/router';
 import {ServicosCompartilhados} from '../../services/servicos-compartilhados';
 
-export const CATEGORIAS = [
+export const TipoDeCategoriasModel = [
   { nome: 'Restaurantes', icone: 'logorestaurante.png', codigo: 'catering.restaurant' },
   { nome: 'Cafés', icone: 'logocafe.png', codigo: 'catering.cafe' },
   { nome: 'Parques', icone: 'logoparque.png', codigo: 'leisure.park' },
@@ -28,20 +28,19 @@ export const CATEGORIAS = [
 })
 export class HomeComponent implements OnInit {
 
-  listaCategorias = CATEGORIAS;
-  categoriaSelecionada!: string;
+  listaCategorias = TipoDeCategoriasModel;
 
-  constructor(private router: Router, private categoriaService: ServicosCompartilhados) {
-  }
+  constructor(
+    private router: Router,
+    private categoriaService: ServicosCompartilhados
+  ) {}
 
   ngOnInit(): void {
-    console.log(this.listaCategorias);
   }
 
-  aoClicarCard(codigo: string){
+  aoClicarCard(codigo: any){
     this.categoriaService.setCategoria(codigo);
-    this.router.navigate(['/localizar'], { queryParams: { categoria: codigo }});
+    this.router.navigate(['/localizar']);
   }
 
-  protected readonly CATEGORIAS = CATEGORIAS;
 }

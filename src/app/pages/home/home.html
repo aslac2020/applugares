@@ -7,7 +7,7 @@
   <div class="conteudo">
     <span class="subtitulo">Escolha uma categoria</span>
     <div class="cards-categorias">
-      <mat-card (click)="aoClicarCard(categoria.codigo)"  class="categoria-card" *ngFor="let categoria of listaCategorias">
+      <mat-card (click)="aoClicarCard(categoria)"  class="categoria-card" *ngFor="let categoria of listaCategorias">
         <img [src]="categoria.icone" alt="{{categoria.nome}}">
         <mat-card-title>{{categoria.nome}}</mat-card-title>
       </mat-card>
